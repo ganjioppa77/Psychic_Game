@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Psychic Game</title>
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Added link to the jQuery Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <!-- Added a link to Bootstrap-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+</head>
+<body>
+
+  <div id="empty-div"></div>
+
+  <div>
+    <h1>The Psychic Game</h1>
+    <p>Guess what letter I'm thinking of</p>
+    <p id="wins-text"></p>
+    <p id="losses-text"></p>
+    <p id="guessLeft-text"></p>
+    <p id="yourguess-text"></p>
+  </div>
+
+  <script type="text/javascript">
+
+    $(document).ready(function() {
+      
+
+      var computerChoices = "abcdefghijklmnopqrstuvwxyz";
+      var wins = 0;
+      var losses = 0;
+      var guessLeft = 3;
+
+      var winsText = document.getElementById("wins-text");
+      var lossesText = document.getElementById("losses-text");
+      var guessLeftText = document.getElementById("guessLeft-text");
+
+
+      // This function is run whenever the user presses a key.
+      document.onkeyup = function(event) {
+      
+      winsText.textContent = "wins: " + wins;
+      lossesText.textContent = "losses: " + losses;
+      guessLeftText.textContent = "Guesses left: " + guessLeft;
+    
+      // Determines which key was pressed.
+      var userGuess = event.key;
+
+      var yourGuess = $("<data>");
+      yourGuess.attr("data-letter", userGuess);
+      yourGuess.text(userGuess);
+      $("#yourguess-text").append(userGuess);
+  
+
+
+      // Randomly chooses a choice from the options array. This is the Computer's guess.
+      var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+        if(userGuess === computerGuess){
+        wins++;
+        $("#yourguess-text").empty();
+        guessLeft = 5;
+        }
+        else if(userGuess !== computerGuess && guessLeft !== 0){
+        guessLeft = guessLeft -1;
+        }
+        else if(guessLeft === 0){
+        $("#yourguess-text").empty();
+        losses++;
+        guessLeft = 5;
+        }
+
+
+
+};
+
+
+
+
+    });
+    
+
+  </script>
+  
+</body>
+</html>
